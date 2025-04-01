@@ -36,10 +36,17 @@ class _AddvendorState extends State<Addvendor> {
     String category = categoryController.text.trim();
     String email = emailController.text.trim();
     String availableTimings = availableTimingsController.text.trim();
-    if (vendors.contains(vendorName)) {
-      // check weather vendor is new or existing
+    // if (vendors.contains(vendorName)) {
+    //   // check weather vendor is new or existing
+    //   ScaffoldMessenger.of(context)
+    //       .showSnackBar(SnackBar(content: Text("Vendor already exists!")));
+    //   return;
+    // }
+    bool vendorExists =
+        vendors.any((vendor) => vendor["Vendor Name"] == vendorName);
+    if (vendorExists) {
       ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text("Vendor already exists!")));
+          .showSnackBar(SnackBar(content: Text("Vendor already Exists")));
       return;
     }
 
