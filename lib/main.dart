@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kashinfo/AddVendor.dart';
+import 'package:kashinfo/screens/add_vendor_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -8,13 +8,28 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(),
-      home: Addvendor(),
+      home: AddVendorScreen(),
     );
   }
 }
+
+
+
+
+
+
+
+
+
+
+// For Button Add Text isWhatsApp?
+// For Categories Use DropDown Instead of TextF
+// Better Styling, Sizing, Spacing
+// Use DatePicker For Avlb Timings
+// Make all field mandatory
+// check for duplicate entry on name and email and phone number

@@ -1,10 +1,12 @@
+// ignore_for_file: must_be_immutable
+
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:kashinfo/Mycolors.dart';
+import 'package:kashinfo/constants/my_colors.dart';
 
-class Mytextfield extends StatelessWidget {
-  Mytextfield({this.controller, this.hintText, this.width});
+class CustomTextField extends StatelessWidget {
+  CustomTextField({super.key, this.controller, this.hintText, this.width});
 
   TextEditingController? controller;
   String? hintText;
@@ -12,12 +14,11 @@ class Mytextfield extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double deviceH = MediaQuery.sizeOf(context).height;
     double deviceW = MediaQuery.sizeOf(context).width;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 10),
       child: SizedBox(
-        width: width,
+        width: width ?? deviceW * 0.4,
         child: Card(
           elevation: 3,
           child: TextField(

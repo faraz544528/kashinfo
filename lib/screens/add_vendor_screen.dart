@@ -1,30 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:kashinfo/Mycolors.dart';
-import 'package:kashinfo/myButtons.dart';
-import 'package:kashinfo/myTextField.dart';
+import 'package:kashinfo/constants/my_colors.dart';
+import 'package:kashinfo/data/controllers.dart';
+import 'package:kashinfo/widgets/my_buttons.dart';
+import 'package:kashinfo/widgets/my_text_field.dart';
 
-class Addvendor extends StatefulWidget {
-  const Addvendor({super.key});
+class AddVendorScreen extends StatefulWidget {
+  const AddVendorScreen({super.key});
 
   @override
-  State<Addvendor> createState() => _AddvendorState();
+  State<AddVendorScreen> createState() => _AddVendorScreenState();
 }
 
-class _AddvendorState extends State<Addvendor> {
+class _AddVendorScreenState extends State<AddVendorScreen> {
   bool isChecked = true;
   bool showForm = false;
   List<Map<String, String>> vendors =
       []; //map to store vendor data inside a list
 // Controllers for input fields
-  TextEditingController serviceNameController = TextEditingController();
-  TextEditingController vendorNameController = TextEditingController();
-  TextEditingController vendorAdrressController = TextEditingController();
-  TextEditingController vendorContactController = TextEditingController();
-  TextEditingController whatsappNumberController = TextEditingController();
-  TextEditingController categoryController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
-
-  TextEditingController availableTimingsController = TextEditingController();
 
   void saveVendor() {
     //function to save vendor data
@@ -77,52 +69,6 @@ class _AddvendorState extends State<Addvendor> {
     ScaffoldMessenger.of(context)
         .showSnackBar(SnackBar(content: Text("Vendor Added successfully")));
   }
-  // Map vendors = {};
-  // TextEditingController serviceNameController = TextEditingController();
-  // TextEditingController vendorNameController = TextEditingController();
-  // TextEditingController vendorAdrressController = TextEditingController();
-  // TextEditingController vendorContactController = TextEditingController();
-  // TextEditingController whatsappNumberController = TextEditingController();
-  // TextEditingController categoryController = TextEditingController();
-  // TextEditingController emailController = TextEditingController();
-  // TextEditingController availableTimingsController = TextEditingController();
-
-  // void saveVendor() {
-  //   if (vendors.containsKey(vendorNameController.text.trim())) {
-  //     ScaffoldMessenger.of(context)
-  //         .showSnackBar(SnackBar(content: Text("Vendor Already Exists")));
-  //     return;
-  //   }
-  //   setState(() {
-  //     vendors[serviceNameController.text.trim()] =
-  //         serviceNameController.text.trim();
-  //     vendors[vendorNameController.text.trim()] =
-  //         vendorNameController.text.trim();
-  //     vendors[vendorAdrressController.text.trim()] =
-  //         vendorAdrressController.text.trim();
-  //     vendors[vendorContactController.text.trim()] =
-  //         vendorContactController.text.trim();
-  //     vendors[whatsappNumberController.text.trim()] =
-  //         whatsappNumberController.text.trim();
-  //     vendors[categoryController.text.trim()] = categoryController.text.trim();
-  //     vendors[emailController.text.trim()] = emailController.text.trim();
-  //     vendors[availableTimingsController.text.trim()] =
-  //         availableTimingsController.text.trim();
-
-  //     serviceNameController.clear();
-  //     vendorNameController.clear();
-  //     vendorAdrressController.clear();
-  //     vendorContactController.clear();
-  //     whatsappNumberController.clear();
-  //     categoryController.clear();
-  //     emailController.clear();
-  //     availableTimingsController.clear();
-  //     isChecked = true;
-  //     showForm = false;
-  //   });
-  //   ScaffoldMessenger.of(context)
-  //       .showSnackBar(SnackBar(content: Text("vendor Added successfully")));
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -145,16 +91,12 @@ class _AddvendorState extends State<Addvendor> {
               children: [
                 CircleAvatar(
                   radius: 25,
-                  child: IconButton(
-                      onPressed: () {}, icon: Icon(Icons.person_add)),
+                  child: Icon(Icons.person_add),
                 ),
-                SizedBox(
-                  width: deviceW * 0.37,
-                ),
-                Text(
-                  "KashInfo Add Vendor",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                ),
+                SizedBox(width: deviceW * 0.37),
+                Text("KashInfo Add Vendor",
+                    style:
+                        TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
               ],
             ),
           ),
@@ -168,23 +110,21 @@ class _AddvendorState extends State<Addvendor> {
                   ? Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Mytextfield(
+                        CustomTextField(
                             hintText: "Service Name",
                             controller: serviceNameController),
-                        Mytextfield(
+                        CustomTextField(
                             hintText: "Vendor Name",
                             controller: vendorNameController),
-                        Mytextfield(
+                        CustomTextField(
                             hintText: "Vendor Address",
                             controller: vendorAdrressController),
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Mytextfield(
-                              hintText: "Vendor Contact",
-                              controller: vendorContactController,
-                              width: deviceW * 0.84,
-                            ),
+                            CustomTextField(
+                                hintText: "Vendor Contact",
+                                controller: vendorContactController),
                             Checkbox(
                               value: isChecked,
                               onChanged: (value) {
@@ -196,19 +136,19 @@ class _AddvendorState extends State<Addvendor> {
                           ],
                         ),
                         if (!isChecked)
-                          Mytextfield(
+                          CustomTextField(
                             hintText: "WhatsApp Number",
                             controller: whatsappNumberController,
                           ),
-                        Mytextfield(
+                        CustomTextField(
                             hintText: "Category",
                             controller: categoryController),
-                        Mytextfield(
+                        CustomTextField(
                             hintText: "Email", controller: emailController),
-                        Mytextfield(
+                        CustomTextField(
                             hintText: "Available Timings",
                             controller: availableTimingsController),
-                        Mybuttons(
+                        CustomButton(
                           onPressed: saveVendor,
                           text: "Save Vendor",
                         ),
@@ -216,7 +156,7 @@ class _AddvendorState extends State<Addvendor> {
                     )
                   : Column(
                       children: [
-                        Mybuttons(
+                        CustomButton(
                           onPressed: () {
                             setState(() {
                               showForm = true;
@@ -224,10 +164,8 @@ class _AddvendorState extends State<Addvendor> {
                           },
                           text: "Add Vendor",
                         ),
-                        SizedBox(
-                          height: deviceH * 0.04,
-                        ),
-                        Mybuttons(
+                        SizedBox(height: deviceH * 0.04),
+                        CustomButton(
                           onPressed: () {},
                           text: "Update Existing",
                         ),
