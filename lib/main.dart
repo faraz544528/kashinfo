@@ -32,4 +32,4 @@ class MyApp extends StatelessWidget {
 // Better Styling, Sizing, Spacing
 // Use DatePicker For Avlb Timings
 // Make all field mandatory
-// check for duplicate entry on name and email and phone number
+// check for duplicate entry on name and email and phone number 

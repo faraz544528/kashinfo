@@ -7,4 +7,5 @@ TextEditingController vendorContactController = TextEditingController();
 TextEditingController whatsappNumberController = TextEditingController();
 TextEditingController categoryController = TextEditingController();
 TextEditingController emailController = TextEditingController();
-TextEditingController availableTimingsController = TextEditingController();
+TextEditingController startDateController = TextEditingController();
+TextEditingController endDateController = TextEditingController();

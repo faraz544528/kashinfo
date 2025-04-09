@@ -14,6 +14,7 @@ class AddVendorScreen extends StatefulWidget {
 class _AddVendorScreenState extends State<AddVendorScreen> {
   bool isChecked = true;
   bool showForm = false;
+  String selectedCategory = "Other Category";
   List<Map<String, String>> vendors =
       []; //map to store vendor data inside a list
 // Controllers for input fields
@@ -25,17 +26,54 @@ class _AddVendorScreenState extends State<AddVendorScreen> {
     String vendorAdrress = vendorAdrressController.text.trim();
     String vendorContact = vendorContactController.text.trim();
     String whatsappNumber = whatsappNumberController.text.trim();
+    String dropDownCategory = selectedCategory;
     String category = categoryController.text.trim();
     String email = emailController.text.trim();
-    String availableTimings = availableTimingsController.text.trim();
-    // if (vendors.contains(vendorName)) {
-    //   // check weather vendor is new or existing
-    //   ScaffoldMessenger.of(context)
-    //       .showSnackBar(SnackBar(content: Text("Vendor already exists!")));
-    //   return;
-    // }
-    bool vendorExists =
-        vendors.any((vendor) => vendor["Vendor Name"] == vendorName);
+    String startDate = startDateController.text.trim();
+    String endDate = endDateController.text.trim();
+    if (vendors.contains(vendorName)) {
+      // check weather vendor is new or existing
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text("Vendor already exists!")));
+      return;
+    }
+    if (serviceName.isEmpty) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text("service name is required! ")));
+      return;
+    } else if (vendorName.isEmpty) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text("Vendor Name is required! ")));
+      return;
+    } else if (vendorAdrress.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Vendor Address is required! ")));
+      return;
+    } else if (vendorContact.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Vendor Contact is required! ")));
+      return;
+    } else if (isChecked == false && whatsappNumber.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Whatsapp Number is required! ")));
+      return;
+    } else if (email.isEmpty) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text("Email is required! ")));
+      return;
+    } else if (startDate.isEmpty) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text("Start Date is required! ")));
+      return;
+    } else if (endDate.isEmpty) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text("End Date is required! ")));
+      return;
+    }
+    bool vendorExists = vendors.any((vendor) =>
+        vendor["Vendor Name"] == vendorName ||
+        vendor["Vendor Contact"] == vendorContact ||
+        vendor["Email"] == email);
     if (vendorExists) {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text("Vendor already Exists")));
@@ -50,10 +88,13 @@ class _AddVendorScreenState extends State<AddVendorScreen> {
         'Vendor Address': vendorAdrress,
         'Vendor Contact': vendorContact,
         'WhatsApp Number': whatsappNumber,
+        'DropDown Categoery': dropDownCategory,
         'Category': category,
         'Email': email,
-        'Availaible Timings': availableTimings,
+        'Start Date': startDate,
+        'End Date': endDate
       });
+
       // clear after saving data
       serviceNameController.clear();
       vendorNameController.clear();
@@ -62,12 +103,26 @@ class _AddVendorScreenState extends State<AddVendorScreen> {
       whatsappNumberController.clear();
       categoryController.clear();
       emailController.clear();
-      availableTimingsController.clear();
+      startDateController.clear();
+      endDateController.clear();
       isChecked = true;
       showForm = false;
+
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text("Vendor Added successfully")));
     });
-    ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text("Vendor Added successfully")));
+  }
+
+  Future<void> selectDate(TextEditingController controller) async {
+    DateTime? pickedDate = await showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime(2000),
+        lastDate: DateTime(2100));
+    if (pickedDate != null) {
+      controller.text =
+          "${pickedDate.year}-${pickedDate.month.toString().padLeft(2, "0")}-${pickedDate.day.toString().padLeft(2, "0")}";
+    }
   }
 
   @override
@@ -122,9 +177,12 @@ class _AddVendorScreenState extends State<AddVendorScreen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            CustomTextField(
-                                hintText: "Vendor Contact",
-                                controller: vendorContactController),
+                            Padding(
+                              padding: EdgeInsets.only(left: 100),
+                              child: CustomTextField(
+                                  hintText: "Vendor Contact",
+                                  controller: vendorContactController),
+                            ),
                             Checkbox(
                               value: isChecked,
                               onChanged: (value) {
@@ -132,7 +190,8 @@ class _AddVendorScreenState extends State<AddVendorScreen> {
                                   isChecked = value!;
                                 });
                               },
-                            )
+                            ),
+                            Text("Is Whatsapp")
                           ],
                         ),
                         if (!isChecked)
@@ -140,14 +199,58 @@ class _AddVendorScreenState extends State<AddVendorScreen> {
                             hintText: "WhatsApp Number",
                             controller: whatsappNumberController,
                           ),
+                        Container(
+                          width: deviceW * 0.2,
+                          decoration: BoxDecoration(
+                              border: Border.all(color: AppColors.pink),
+                              borderRadius: BorderRadius.circular(12)),
+                          child: DropdownButton(
+                            icon: Icon(Icons.arrow_downward_outlined),
+                            underline: SizedBox.shrink(),
+                            isExpanded: true,
+                            items: [
+                              DropdownMenuItem(
+                                  value: "Other Category",
+                                  child: Text("Other Category")),
+                              DropdownMenuItem(
+                                  value: "Travel", child: Text("Travel")),
+                              DropdownMenuItem(
+                                  value: "grocery", child: Text("grocery")),
+                              DropdownMenuItem(
+                                  value: "medicine", child: Text("medicine")),
+                              DropdownMenuItem(
+                                  value: "Shopping", child: Text("Shopping")),
+                              DropdownMenuItem(
+                                  value: "Service", child: Text("Service"))
+                            ],
+                            value: selectedCategory,
+                            onChanged: (value) {
+                              setState(() {});
+                              selectedCategory = value!;
+                            },
+                          ),
+                        ),
                         CustomTextField(
                             hintText: "Category",
                             controller: categoryController),
                         CustomTextField(
                             hintText: "Email", controller: emailController),
                         CustomTextField(
-                            hintText: "Available Timings",
-                            controller: availableTimingsController),
+                            onTap: () {
+                              selectDate(startDateController);
+                            },
+                            suffixIcon: Icon(Icons.calendar_month_sharp),
+                            filled: true,
+                            hintText: "Available From",
+                            controller: startDateController),
+                        CustomTextField(
+                            onTap: () {
+                              selectDate(endDateController);
+                            },
+                            suffixIcon: Icon(Icons.calendar_month_sharp),
+                            filled: true,
+                            hintText: "Available To",
+                            controller: endDateController),
                         CustomButton(
                           onPressed: saveVendor,
                           text: "Save Vendor",
@@ -169,6 +272,11 @@ class _AddVendorScreenState extends State<AddVendorScreen> {
                           onPressed: () {},
                           text: "Update Existing",
                         ),
+                        SizedBox(height: deviceH * 0.04),
+                        CustomButton(
+                          onPressed: () {},
+                          text: "Existing Vendors",
+                        )
                       ],
                     )
             ],
