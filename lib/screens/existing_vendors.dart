@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:kashinfo/constants/my_colors.dart';
 import 'package:kashinfo/data/controllers.dart';
 import 'package:kashinfo/widgets/my_buttons.dart';
 import 'package:kashinfo/widgets/my_text_field.dart';
@@ -40,25 +41,38 @@ class _ExistingVendorsState extends State<ExistingVendors> {
               onPressed: fetchDetails,
               text: "HIT API",
             ),
+            SizedBox(
+              height: 30,
+            ),
             if (firstName != null && lastName != null && image != null)
-              Container(
-                height: 100,
-                width: 200,
-                color: Colors.grey,
-                child: Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 15),
-                      child: CircleAvatar(
-                        radius: 20,
-                        backgroundImage: NetworkImage(image!),
+              Card(
+                elevation: 2,
+                child: Container(
+                  height: 100,
+                  width: 200,
+                  decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(color: Colors.red, blurStyle: BlurStyle.outer)
+                    ],
+                    borderRadius: BorderRadius.circular(16),
+                    gradient: LinearGradient(
+                        colors: [AppColors.orange, AppColors.pink]),
+                  ),
+                  child: Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 15),
+                        child: CircleAvatar(
+                          radius: 20,
+                          backgroundImage: NetworkImage(image!),
+                        ),
                       ),
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Text("$firstName \n$lastName"),
-                  ],
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text("$firstName \n$lastName"),
+                    ],
+                  ),
                 ),
               )
           ],
