@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kashinfo/constants/my_colors.dart';
 import 'package:kashinfo/data/controllers.dart';
+import 'package:kashinfo/screens/existing_vendors.dart';
 import 'package:kashinfo/widgets/my_buttons.dart';
 import 'package:kashinfo/widgets/my_text_field.dart';
 
@@ -12,15 +13,17 @@ class AddVendorScreen extends StatefulWidget {
 }
 
 class _AddVendorScreenState extends State<AddVendorScreen> {
+  String selectedCategory = "Other Category";
   bool isChecked = true;
   bool showForm = false;
-  String selectedCategory = "Other Category";
+
   List<Map<String, String>> vendors =
       []; //map to store vendor data inside a list
 // Controllers for input fields
 
   void saveVendor() {
     //function to save vendor data
+    String imageURL = vendorImageController.text.trim();
     String serviceName = serviceNameController.text.trim();
     String vendorName = vendorNameController.text.trim();
     String vendorAdrress = vendorAdrressController.text.trim();
@@ -31,12 +34,7 @@ class _AddVendorScreenState extends State<AddVendorScreen> {
     String email = emailController.text.trim();
     String startDate = startDateController.text.trim();
     String endDate = endDateController.text.trim();
-    if (vendors.contains(vendorName)) {
-      // check weather vendor is new or existing
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text("Vendor already exists!")));
-      return;
-    }
+
     if (serviceName.isEmpty) {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text("service name is required! ")));
@@ -52,6 +50,10 @@ class _AddVendorScreenState extends State<AddVendorScreen> {
     } else if (vendorContact.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text("Vendor Contact is required! ")));
+      return;
+    } else if (category.isEmpty && selectedCategory == "Other Category") {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text("Category is required")));
       return;
     } else if (isChecked == false && whatsappNumber.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -83,6 +85,7 @@ class _AddVendorScreenState extends State<AddVendorScreen> {
     setState(() {
       vendors.add({
         // save vendor data in map
+        'Image URL': imageURL,
         'Service Name': serviceName,
         'Vendor Name': vendorName,
         'Vendor Address': vendorAdrress,
@@ -96,6 +99,7 @@ class _AddVendorScreenState extends State<AddVendorScreen> {
       });
 
       // clear after saving data
+      vendorImageController.clear();
       serviceNameController.clear();
       vendorNameController.clear();
       vendorAdrressController.clear();
@@ -107,6 +111,7 @@ class _AddVendorScreenState extends State<AddVendorScreen> {
       endDateController.clear();
       isChecked = true;
       showForm = false;
+      selectedCategory = "Other Category";
 
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text("Vendor Added successfully")));
@@ -165,6 +170,10 @@ class _AddVendorScreenState extends State<AddVendorScreen> {
                   ? Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
+                        CustomTextField(
+                          hintText: "Image URL",
+                          controller: vendorImageController,
+                        ),
                         CustomTextField(
                             hintText: "Service Name",
                             controller: serviceNameController),
@@ -274,7 +283,13 @@ class _AddVendorScreenState extends State<AddVendorScreen> {
                         ),
                         SizedBox(height: deviceH * 0.04),
                         CustomButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        ExistingVendors(vendors: vendors)));
+                          },
                           text: "Existing Vendors",
                         )
                       ],

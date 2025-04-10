@@ -1,28 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:kashinfo/data/controllers.dart';
 
-class MyWidget extends StatefulWidget {
-  const MyWidget({super.key});
+class ExistingVendors extends StatefulWidget {
+  final List<Map<String, String>> vendors;
+  const ExistingVendors({super.key, required this.vendors});
 
   @override
-  State<MyWidget> createState() => _MyWidgetState();
+  State<ExistingVendors> createState() => _ExistingVendorsState();
 }
 
-class _MyWidgetState extends State<MyWidget> {
+class _ExistingVendorsState extends State<ExistingVendors> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Existing vendors")),
-      body: Column(
-        children: [
-          Text(serviceNameController.text),
-          Text(vendorNameController.text),
-          Text(vendorAdrressController.text),
-          Text(vendorContactController.text),
-          Text(whatsappNumberController.text),
-          Text(categoryController.text),
-        ],
-      ),
-    );
+        appBar: AppBar(title: Text("Existing vendors")),
+        body: ListView.builder(
+          itemCount: widget.vendors.length,
+          itemBuilder: (context, index) {
+            final vendor = widget.vendors[index];
+            return ListTile(
+              leading: Image(image: NetworkImage(vendor['Image URL'] ?? "")),
+              title: Text(vendor['Vendor Name'] ?? ""),
+              subtitle: Text(vendor['Email'] ?? ""),
+            );
+          },
+        ));
   }
 }
