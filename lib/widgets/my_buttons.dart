@@ -1,8 +1,11 @@
-import 'package:flutter/material.dart';
-import 'package:kashinfo/Mycolors.dart';
+// ignore_for_file: must_be_immutable
 
-class Mybuttons extends StatelessWidget {
-  Mybuttons({
+import 'package:flutter/material.dart';
+import 'package:kashinfo/constants/my_colors.dart';
+
+class CustomButton extends StatelessWidget {
+  CustomButton({
+    super.key,
     required this.onPressed,
     this.text,
   });
