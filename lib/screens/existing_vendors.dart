@@ -47,43 +47,47 @@ class _ExistingVendorsState extends State<ExistingVendors> {
     BuildContext context,
   ) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(title: Text("Existing vendors")),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            if (push.length > 0)
-              Card(
-                  elevation: 4,
-                  child: SizedBox(
-                    height: 300,
-                    width: 500,
-                    child: ListView.builder(
-                        itemCount: push.length,
-                        itemBuilder: (context, index) {
-                          final pushValue = push[index];
-                          return Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Container(
-                                height: 100,
-                                width: 400,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(16),
-                                    gradient: LinearGradient(colors: [
-                                      AppColors.orange,
-                                      AppColors.pink
-                                    ])),
-                                child: ListTile(
-                                  leading: Image(
-                                      image: NetworkImage(
-                                          pushValue['avatar'] ?? "")),
-                                  title: Text(pushValue['first_name'] ?? ""),
-                                  subtitle: Text(pushValue['email'] ?? ""),
-                                )),
-                          );
-                        }),
-                  )),
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              if (push.length > 0)
+                Card(
+                    color: Colors.white,
+                    elevation: 4,
+                    child: SizedBox(
+                      height: MediaQuery.sizeOf(context).height - 20,
+                      width: MediaQuery.sizeOf(context).width - 250,
+                      child: ListView.builder(
+                          itemCount: push.length,
+                          itemBuilder: (context, index) {
+                            final pushValue = push[index];
+                            return Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Container(
+                                  height: 100,
+                                  width: 400,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(16),
+                                      gradient: LinearGradient(colors: [
+                                        AppColors.orange,
+                                        AppColors.pink
+                                      ])),
+                                  child: ListTile(
+                                    leading: Image(
+                                        image: NetworkImage(
+                                            pushValue['avatar'] ?? "")),
+                                    title: Text(pushValue['first_name'] ?? ""),
+                                    subtitle: Text(pushValue['email'] ?? ""),
+                                  )),
+                            );
+                          }),
+                    )),
+            ],
+          ),
         ),
       ),
     );
