@@ -190,21 +190,18 @@ class _AddVendorScreenState extends State<AddVendorScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Padding(
-                  padding: EdgeInsets.only(left: 100),
-                  child: CustomTextField(
-                      hintText: "Vendor Contact",
-                      controller: vendorContactController),
-                ),
-                Checkbox(
-                  value: isChecked,
-                  onChanged: (value) {
-                    setState(() {
-                      isChecked = value!;
-                    });
-                  },
-                ),
-                Text("Is Whatsapp")
+                CustomTextField(
+                    hintText: "Vendor Contact",
+                    suffixIcon: Checkbox(
+                      value: isChecked,
+                      semanticLabel: "Is Whatsapp",
+                      onChanged: (value) {
+                        setState(() {
+                          isChecked = value!;
+                        });
+                      },
+                    ),
+                    controller: vendorContactController),
               ],
             ),
             if (!isChecked)
@@ -272,14 +269,16 @@ class _AddVendorScreenState extends State<AddVendorScreen> {
                 //   'VendorEmail': 'abc@email.com',
                 // });
 
-                await addVendor('category', {
-                  'VendorName': 'Faraaz Khan',
-                  'VendorPhone': '9149828278',
-                  'VendorServiceType': 'Associate Engineer',
+                await addVendor(selectedCategory, {
+                  'VendorImage': vendorImageController.text,
+                  'VendorName': vendorNameController.text,
+                  'VendorPhone': vendorContactController.text,
+                  'VendorServiceType': serviceNameController.text,
                   'VendorAddress': {'lat': 12.34, 'long': 56.78},
-                  'VendorAvailabilityTimings': timestamp,
-                  'VendorWhatsAppPhone': '1234567890',
-                  'VendorEmail': 'abc@email.com',
+                  'VendorAvailableFrom': startDateController.text,
+                  'VendorAvailableTo': endDateController.text,
+                  'VendorWhatsAppPhone': whatsappNumberController.text,
+                  'VendorEmail': emailController.text,
                 });
 
                 debugPrint('STORED');
