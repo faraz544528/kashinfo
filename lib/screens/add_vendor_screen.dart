@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:kashinfo/constants/my_colors.dart';
 import 'package:kashinfo/data/controllers.dart';
@@ -20,6 +21,15 @@ class _AddVendorScreenState extends State<AddVendorScreen> {
   List<Map<String, String>> vendors =
       []; //map to store vendor data inside a list
 // Controllers for input fields
+
+  Future<void> addVendor(
+      String vendorType, Map<String, dynamic> vendorData) async {
+    await FirebaseFirestore.instance
+        .collection(vendorType)
+        // .doc(vendorId)
+        // .collection('medics')
+        .add(vendorData);
+  }
 
   void saveVendor() {
     //function to save vendor data
@@ -162,140 +172,113 @@ class _AddVendorScreenState extends State<AddVendorScreen> {
           ),
         ),
       ),
-      body: Center(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              showForm
-                  ? Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        CustomTextField(
-                          hintText: "Image URL",
-                          controller: vendorImageController,
-                        ),
-                        CustomTextField(
-                            hintText: "Service Name",
-                            controller: serviceNameController),
-                        CustomTextField(
-                            hintText: "Vendor Name",
-                            controller: vendorNameController),
-                        CustomTextField(
-                            hintText: "Vendor Address",
-                            controller: vendorAdrressController),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.only(left: 100),
-                              child: CustomTextField(
-                                  hintText: "Vendor Contact",
-                                  controller: vendorContactController),
-                            ),
-                            Checkbox(
-                              value: isChecked,
-                              onChanged: (value) {
-                                setState(() {
-                                  isChecked = value!;
-                                });
-                              },
-                            ),
-                            Text("Is Whatsapp")
-                          ],
-                        ),
-                        if (!isChecked)
-                          CustomTextField(
-                            hintText: "WhatsApp Number",
-                            controller: whatsappNumberController,
-                          ),
-                        Container(
-                          width: deviceW * 0.2,
-                          decoration: BoxDecoration(
-                              border: Border.all(color: AppColors.pink),
-                              borderRadius: BorderRadius.circular(12)),
-                          child: DropdownButton(
-                            icon: Icon(Icons.arrow_downward_outlined),
-                            underline: SizedBox.shrink(),
-                            isExpanded: true,
-                            items: [
-                              DropdownMenuItem(
-                                  value: "Other Category",
-                                  child: Text("Other Category")),
-                              DropdownMenuItem(
-                                  value: "Travel", child: Text("Travel")),
-                              DropdownMenuItem(
-                                  value: "grocery", child: Text("grocery")),
-                              DropdownMenuItem(
-                                  value: "medicine", child: Text("medicine")),
-                              DropdownMenuItem(
-                                  value: "Shopping", child: Text("Shopping")),
-                              DropdownMenuItem(
-                                  value: "Service", child: Text("Service"))
-                            ],
-                            value: selectedCategory,
-                            onChanged: (value) {
-                              setState(() {});
-                              selectedCategory = value!;
-                            },
-                          ),
-                        ),
-                        CustomTextField(
-                            hintText: "Category",
-                            controller: categoryController),
-                        CustomTextField(
-                            hintText: "Email", controller: emailController),
-                        CustomTextField(
-                            onTap: () {
-                              selectDate(startDateController);
-                            },
-                            suffixIcon: Icon(Icons.calendar_month_sharp),
-                            filled: true,
-                            hintText: "Available From",
-                            controller: startDateController),
-                        CustomTextField(
-                            onTap: () {
-                              selectDate(endDateController);
-                            },
-                            suffixIcon: Icon(Icons.calendar_month_sharp),
-                            filled: true,
-                            hintText: "Available To",
-                            controller: endDateController),
-                        CustomButton(
-                          onPressed: saveVendor,
-                          text: "Save Vendor",
-                        ),
-                      ],
-                    )
-                  : Column(
-                      children: [
-                        CustomButton(
-                          onPressed: () {
-                            setState(() {
-                              showForm = true;
-                            });
-                          },
-                          text: "Add Vendor",
-                        ),
-                        SizedBox(height: deviceH * 0.04),
-                        CustomButton(
-                          onPressed: () {},
-                          text: "Update Existing",
-                        ),
-                        SizedBox(height: deviceH * 0.04),
-                        CustomButton(
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        ExistingVendors(vendors: vendors)));
-                          },
-                          text: "Existing Vendors",
-                        )
-                      ],
-                    )
-            ],
-          ),
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            CustomTextField(
+              hintText: "Image URL",
+              controller: vendorImageController,
+            ),
+            CustomTextField(
+                hintText: "Service Name", controller: serviceNameController),
+            CustomTextField(
+                hintText: "Vendor Name", controller: vendorNameController),
+            CustomTextField(
+                hintText: "Vendor Address",
+                controller: vendorAdrressController),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(left: 100),
+                  child: CustomTextField(
+                      hintText: "Vendor Contact",
+                      controller: vendorContactController),
+                ),
+                Checkbox(
+                  value: isChecked,
+                  onChanged: (value) {
+                    setState(() {
+                      isChecked = value!;
+                    });
+                  },
+                ),
+                Text("Is Whatsapp")
+              ],
+            ),
+            if (!isChecked)
+              CustomTextField(
+                hintText: "WhatsApp Number",
+                controller: whatsappNumberController,
+              ),
+            Container(
+              width: deviceW * 0.2,
+              decoration: BoxDecoration(
+                  border: Border.all(color: AppColors.pink),
+                  borderRadius: BorderRadius.circular(12)),
+              child: DropdownButton(
+                icon: Icon(Icons.arrow_downward_outlined),
+                underline: SizedBox.shrink(),
+                isExpanded: true,
+                items: [
+                  DropdownMenuItem(
+                      value: "Other Category", child: Text("Other Category")),
+                  DropdownMenuItem(value: "Travel", child: Text("Travel")),
+                  DropdownMenuItem(value: "grocery", child: Text("grocery")),
+                  DropdownMenuItem(value: "medicine", child: Text("medicine")),
+                  DropdownMenuItem(value: "Shopping", child: Text("Shopping")),
+                  DropdownMenuItem(value: "Service", child: Text("Service"))
+                ],
+                value: selectedCategory,
+                onChanged: (value) {
+                  setState(() {});
+                  selectedCategory = value!;
+                },
+              ),
+            ),
+            CustomTextField(
+                hintText: "Category", controller: categoryController),
+            CustomTextField(hintText: "Email", controller: emailController),
+            CustomTextField(
+                onTap: () {
+                  selectDate(startDateController);
+                },
+                suffixIcon: Icon(Icons.calendar_month_sharp),
+                filled: true,
+                hintText: "Available From",
+                controller: startDateController),
+            CustomTextField(
+                onTap: () {
+                  selectDate(endDateController);
+                },
+                suffixIcon: Icon(Icons.calendar_month_sharp),
+                filled: true,
+                hintText: "Available To",
+                controller: endDateController),
+            CustomButton(
+              onPressed: () async {
+                String dateStr = "2024-04-10 15:30:00";
+                DateTime dateTime = DateTime.parse(dateStr);
+                Timestamp timestamp = Timestamp.fromDate(dateTime);
+
+                await addVendor('test', {
+                  'VendorName': 'Faraaz Khan',
+                  'VendorPhone': '9149828278',
+                  'VendorServiceType': 'Associate Engineer',
+                  'VendorAddress': {'lat': 12.34, 'long': 56.78},
+                  'VendorAvailabilityTimings': timestamp,
+                  'VendorWhatsAppPhone': '1234567890',
+                  'VendorEmail': 'abc@email.com',
+                });
+
+                debugPrint('STORED');
+
+                saveVendor();
+              },
+              text: "Save Vendor",
+            ),
+          ],
         ),
       ),
     );

@@ -1,12 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:kashinfo/constants/my_colors.dart';
-import 'package:kashinfo/data/controllers.dart';
-import 'package:kashinfo/widgets/my_buttons.dart';
-import 'package:kashinfo/widgets/my_text_field.dart';
 
 class ExistingVendors extends StatefulWidget {
   final List<Map<String, String>> vendors;
@@ -28,15 +24,11 @@ class _ExistingVendorsState extends State<ExistingVendors> {
     setState(() {
       decoder["data"].forEach((element) {
         push.add(element);
-        // print(push);
       });
-
-      // firstName = "FirstName: ${decoder["data"][0]["first_name"]}";
-      // lastName = "LastName: ${decoder["data"][0]["last_name"]}";
-      // image = ["data"][0]["avatar"];
     });
   }
 
+  @override
   void initState() {
     super.initState();
     fetchDetails();
@@ -54,7 +46,7 @@ class _ExistingVendorsState extends State<ExistingVendors> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              if (push.length > 0)
+              if (push.isNotEmpty)
                 Card(
                     color: Colors.white,
                     elevation: 4,
