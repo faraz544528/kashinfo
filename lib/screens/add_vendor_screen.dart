@@ -262,7 +262,17 @@ class _AddVendorScreenState extends State<AddVendorScreen> {
                 DateTime dateTime = DateTime.parse(dateStr);
                 Timestamp timestamp = Timestamp.fromDate(dateTime);
 
-                await addVendor('test', {
+                // await addVendor('category', {
+                //   'VendorName': 'Faraaz Khan',
+                //   'VendorPhone': '9149828278',
+                //   'VendorServiceType': 'Associate Engineer',
+                //   'VendorAddress': {'lat': 12.34, 'long': 56.78},
+                //   'VendorAvailabilityTimings': timestamp,
+                //   'VendorWhatsAppPhone': '1234567890',
+                //   'VendorEmail': 'abc@email.com',
+                // });
+
+                await addVendor('category', {
                   'VendorName': 'Faraaz Khan',
                   'VendorPhone': '9149828278',
                   'VendorServiceType': 'Associate Engineer',
