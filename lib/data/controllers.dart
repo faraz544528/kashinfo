@@ -10,3 +10,14 @@ TextEditingController categoryController = TextEditingController();
 TextEditingController emailController = TextEditingController();
 TextEditingController startDateController = TextEditingController();
 TextEditingController endDateController = TextEditingController();
+
+// login Screen Controllers
+TextEditingController loginEmailController = TextEditingController();
+TextEditingController loginPasswordController = TextEditingController();
+
+// signUp Screen Controllers
+TextEditingController signUpNameController = TextEditingController();
+TextEditingController signUpPhoneNoController = TextEditingController();
+TextEditingController signUpEmailController = TextEditingController();
+TextEditingController signUpPasswordController = TextEditingController();
+TextEditingController signUpConfirmPasswordController = TextEditingController();

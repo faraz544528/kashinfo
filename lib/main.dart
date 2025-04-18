@@ -2,6 +2,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:kashinfo/firebase_options.dart';
 import 'package:kashinfo/screens/homescreen.dart';
+import 'package:kashinfo/screens/login_screen.dart';
+import 'package:kashinfo/screens/signUp_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,7 +22,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(),
-      home: HomeScreen(),
+      home: SignupScreen(),
     );
   }
 }

@@ -6,15 +6,18 @@ import 'package:flutter/material.dart';
 import 'package:kashinfo/constants/my_colors.dart';
 
 class CustomTextField extends StatelessWidget {
-  CustomTextField(
-      {super.key,
-      this.controller,
-      this.hintText,
-      this.width,
-      this.suffixIcon,
-      this.filled,
-      this.onTap,
-      this.readOnly});
+  CustomTextField({
+    super.key,
+    this.controller,
+    this.hintText,
+    this.width,
+    this.suffixIcon,
+    this.filled,
+    this.onTap,
+    this.readOnly,
+    this.prefixIcon,
+    this.obscureText = false,
+  });
 
   TextEditingController? controller;
   String? hintText;
@@ -23,6 +26,8 @@ class CustomTextField extends StatelessWidget {
   bool? filled;
   GestureTapCallback? onTap;
   bool? readOnly;
+  Widget? prefixIcon;
+  bool obscureText;
 
   @override
   Widget build(BuildContext context) {
@@ -34,11 +39,13 @@ class CustomTextField extends StatelessWidget {
         child: Card(
           elevation: 3,
           child: TextField(
+            obscureText: obscureText!,
             onTap: onTap,
             readOnly: readOnly ?? (onTap != null),
             controller: controller,
             decoration: InputDecoration(
                 suffixIcon: suffixIcon,
+                prefixIcon: prefixIcon,
                 filled: filled,
                 hintText: hintText,
                 enabledBorder: OutlineInputBorder(
