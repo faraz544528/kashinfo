@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:kashinfo/firebase_options.dart';
+import 'package:kashinfo/screens/add_vendor_screen.dart';
 import 'package:kashinfo/screens/homescreen.dart';
 import 'package:kashinfo/screens/login_screen.dart';
 import 'package:kashinfo/screens/signUp_screen.dart';

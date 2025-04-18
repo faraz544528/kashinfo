@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:kashinfo/constants/my_colors.dart';
 import 'package:kashinfo/data/controllers.dart';
 import 'package:kashinfo/screens/existing_vendors.dart';
@@ -140,6 +143,19 @@ class _AddVendorScreenState extends State<AddVendorScreen> {
     }
   }
 
+  // var selectedImage;
+
+  // uploadFromGallery() async {
+  //   var uploadedImage =
+  //       await ImagePicker().pickImage(source: ImageSource.gallery);
+  //   // selectedImage = File(uploadedImage!.path);
+  // }
+
+  // uploadFromCamera() async {
+  //   var uploadedImage =
+  //       await ImagePicker().pickImage(source: ImageSource.gallery);
+  // }
+
   @override
   Widget build(BuildContext context) {
     double deviceH = MediaQuery.sizeOf(context).height;
@@ -176,6 +192,7 @@ class _AddVendorScreenState extends State<AddVendorScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            CustomButton(onPressed: () {}),
             CustomTextField(
               hintText: "Image URL",
               controller: vendorImageController,

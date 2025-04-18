@@ -11,6 +11,29 @@ class SignupScreen extends StatefulWidget {
 }
 
 class _SignupScreenState extends State<SignupScreen> {
+  signupDetails() {
+    var name = signUpNameController.text.trim();
+    var phoneNumber = signUpPhoneNoController.text.trim();
+    var email = signUpEmailController.text.trim();
+    var password = signUpPasswordController.text.trim();
+    var confrimPassword = signUpConfirmPasswordController.text.trim();
+
+    if (name.isEmpty ||
+        phoneNumber.isEmpty ||
+        email.isEmpty ||
+        password.isEmpty ||
+        confrimPassword.isEmpty) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text("Fill All Fields")));
+      return;
+    }
+    if (password != confrimPassword) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text("Password does not match !")));
+      return;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,7 +89,9 @@ class _SignupScreenState extends State<SignupScreen> {
                   height: MediaQuery.sizeOf(context).height - 520,
                 ),
                 CustomButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    signupDetails();
+                  },
                   text: "Sign Up",
                 ),
               ],

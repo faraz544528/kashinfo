@@ -3,6 +3,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:kashinfo/constants/my_colors.dart';
 
 class CustomTextField extends StatelessWidget {
@@ -17,6 +18,8 @@ class CustomTextField extends StatelessWidget {
     this.readOnly,
     this.prefixIcon,
     this.obscureText = false,
+    this.textInputAction,
+    this.inputFormatters,
   });
 
   TextEditingController? controller;
@@ -28,6 +31,8 @@ class CustomTextField extends StatelessWidget {
   bool? readOnly;
   Widget? prefixIcon;
   bool obscureText;
+  TextInputAction? textInputAction;
+  List<TextInputFormatter>? inputFormatters;
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +44,8 @@ class CustomTextField extends StatelessWidget {
         child: Card(
           elevation: 3,
           child: TextField(
+            inputFormatters: inputFormatters,
+            textInputAction: textInputAction,
             obscureText: obscureText!,
             onTap: onTap,
             readOnly: readOnly ?? (onTap != null),
