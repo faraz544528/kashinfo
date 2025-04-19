@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-TextEditingController vendorImageController = TextEditingController();
 TextEditingController serviceNameController = TextEditingController();
 TextEditingController vendorNameController = TextEditingController();
 TextEditingController vendorAdrressController = TextEditingController();

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:kashinfo/constants/my_colors.dart';
@@ -36,7 +37,7 @@ class _AddVendorScreenState extends State<AddVendorScreen> {
 
   void saveVendor() {
     //function to save vendor data
-    String imageURL = vendorImageController.text.trim();
+
     String serviceName = serviceNameController.text.trim();
     String vendorName = vendorNameController.text.trim();
     String vendorAdrress = vendorAdrressController.text.trim();
@@ -98,7 +99,7 @@ class _AddVendorScreenState extends State<AddVendorScreen> {
     setState(() {
       vendors.add({
         // save vendor data in map
-        'Image URL': imageURL,
+
         'Service Name': serviceName,
         'Vendor Name': vendorName,
         'Vendor Address': vendorAdrress,
@@ -112,7 +113,7 @@ class _AddVendorScreenState extends State<AddVendorScreen> {
       });
 
       // clear after saving data
-      vendorImageController.clear();
+
       serviceNameController.clear();
       vendorNameController.clear();
       vendorAdrressController.clear();
@@ -145,16 +146,16 @@ class _AddVendorScreenState extends State<AddVendorScreen> {
 
   // var selectedImage;
 
-  // uploadFromGallery() async {
-  //   var uploadedImage =
-  //       await ImagePicker().pickImage(source: ImageSource.gallery);
-  //   // selectedImage = File(uploadedImage!.path);
-  // }
+  uploadFromGallery() async {
+    var uploadedImage =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
+    // selectedImage = File(uploadedImage!.path);
+  }
 
-  // uploadFromCamera() async {
-  //   var uploadedImage =
-  //       await ImagePicker().pickImage(source: ImageSource.gallery);
-  // }
+  uploadFromCamera() async {
+    var uploadedImage =
+        await ImagePicker().pickImage(source: ImageSource.camera);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -192,10 +193,18 @@ class _AddVendorScreenState extends State<AddVendorScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            CustomButton(onPressed: () {}),
             CustomTextField(
-              hintText: "Image URL",
-              controller: vendorImageController,
+              onTap: () {
+                uploadFromGallery();
+              },
+              suffixIcon: IconButton(
+                icon: Icon(CupertinoIcons.photo_camera),
+                onPressed: () {
+                  uploadFromCamera();
+                },
+              ),
+              readOnly: true,
+              hintText: "Upload From Gallery",
             ),
             CustomTextField(
                 hintText: "Service Name", controller: serviceNameController),
@@ -246,8 +255,9 @@ class _AddVendorScreenState extends State<AddVendorScreen> {
                 ],
                 value: selectedCategory,
                 onChanged: (value) {
-                  setState(() {});
-                  selectedCategory = value!;
+                  setState(() {
+                    selectedCategory = value!;
+                  });
                 },
               ),
             ),
@@ -287,7 +297,6 @@ class _AddVendorScreenState extends State<AddVendorScreen> {
                 // });
 
                 await addVendor(selectedCategory, {
-                  'VendorImage': vendorImageController.text,
                   'VendorName': vendorNameController.text,
                   'VendorPhone': vendorContactController.text,
                   'VendorServiceType': serviceNameController.text,
