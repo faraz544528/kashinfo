@@ -9,6 +9,7 @@ import 'package:kashinfo/data/controllers.dart';
 import 'package:kashinfo/screens/existing_vendors.dart';
 import 'package:kashinfo/widgets/my_buttons.dart';
 import 'package:kashinfo/widgets/my_text_field.dart';
+import 'package:kashinfo/widgets/user_avatar.dart';
 
 class AddVendorScreen extends StatefulWidget {
   const AddVendorScreen({super.key});
@@ -144,7 +145,7 @@ class _AddVendorScreenState extends State<AddVendorScreen> {
     }
   }
 
-  // var selectedImage;
+  var selectedImage;
 
   uploadFromGallery() async {
     var uploadedImage =
@@ -193,18 +194,19 @@ class _AddVendorScreenState extends State<AddVendorScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            CustomTextField(
-              onTap: () {
+            userAvatar(
+              photoUrl: "",
+              selectedImage: selectedImage,
+              onPickImage: () {
                 uploadFromGallery();
               },
-              suffixIcon: IconButton(
-                icon: Icon(CupertinoIcons.photo_camera),
-                onPressed: () {
-                  uploadFromCamera();
-                },
-              ),
-              readOnly: true,
-              hintText: "Upload From Gallery",
+            ),
+            userAvatar(
+              photoUrl: "",
+              selectedImage: selectedImage,
+              onPickImage: () {
+                uploadFromCamera();
+              },
             ),
             CustomTextField(
                 hintText: "Service Name", controller: serviceNameController),
