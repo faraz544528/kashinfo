@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
@@ -145,12 +146,17 @@ class _AddVendorScreenState extends State<AddVendorScreen> {
     }
   }
 
-  var selectedImage;
+  Uint8List? selectedImage;
 
   uploadFromGallery() async {
-    var uploadedImage =
+    final uploadedImage =
         await ImagePicker().pickImage(source: ImageSource.gallery);
-    // selectedImage = File(uploadedImage!.path);
+    if (uploadedImage != null) {
+      final bytes = await uploadedImage.readAsBytes();
+      setState(() {
+        selectedImage = bytes;
+      });
+    }
   }
 
   uploadFromCamera() async {
@@ -194,19 +200,24 @@ class _AddVendorScreenState extends State<AddVendorScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            userAvatar(
-              photoUrl: "",
-              selectedImage: selectedImage,
-              onPickImage: () {
-                uploadFromGallery();
-              },
-            ),
-            userAvatar(
-              photoUrl: "",
-              selectedImage: selectedImage,
-              onPickImage: () {
-                uploadFromCamera();
-              },
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                userAvatar(
+                  photoUrl: null,
+                  selectedImageBytes: selectedImage,
+                  onPickImage: () {
+                    uploadFromGallery();
+                  },
+                ),
+                userAvatar(
+                  photoUrl: "",
+                  selectedImageBytes: selectedImage,
+                  onPickImage: () {
+                    uploadFromCamera();
+                  },
+                ),
+              ],
             ),
             CustomTextField(
                 hintText: "Service Name", controller: serviceNameController),
