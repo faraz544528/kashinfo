@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kashinfo/data/controllers.dart';
+import 'package:kashinfo/screens/add_vendor_screen.dart';
+import 'package:kashinfo/screens/login_screen.dart';
 import 'package:kashinfo/widgets/my_buttons.dart';
 import 'package:kashinfo/widgets/my_text_field.dart';
 
@@ -11,27 +13,18 @@ class SignupScreen extends StatefulWidget {
 }
 
 class _SignupScreenState extends State<SignupScreen> {
-  signupDetails() {
-    var name = signUpNameController.text.trim();
-    var phoneNumber = signUpPhoneNoController.text.trim();
-    var email = signUpEmailController.text.trim();
-    var password = signUpPasswordController.text.trim();
-    var confrimPassword = signUpConfirmPasswordController.text.trim();
+  var name;
+  var phoneNumber;
+  var email;
+  var password;
+  var confrimPassword;
 
-    if (name.isEmpty ||
-        phoneNumber.isEmpty ||
-        email.isEmpty ||
-        password.isEmpty ||
-        confrimPassword.isEmpty) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text("Fill All Fields")));
-      return;
-    }
-    if (password != confrimPassword) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text("Password does not match !")));
-      return;
-    }
+  signupDetails() {
+    name = signUpNameController.text.trim();
+    phoneNumber = signUpPhoneNoController.text.trim();
+    email = signUpEmailController.text.trim();
+    password = signUpPasswordController.text.trim();
+    confrimPassword = signUpConfirmPasswordController.text.trim();
   }
 
   @override
@@ -86,13 +79,47 @@ class _SignupScreenState extends State<SignupScreen> {
                   hintText: " Confirm Password",
                 ),
                 SizedBox(
-                  height: MediaQuery.sizeOf(context).height - 520,
+                  height: MediaQuery.sizeOf(context).height - 550,
                 ),
                 CustomButton(
                   onPressed: () {
                     signupDetails();
+                    if (name.isEmpty ||
+                        phoneNumber.isEmpty ||
+                        email.isEmpty ||
+                        password.isEmpty ||
+                        confrimPassword.isEmpty) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text("Fill All Fields")));
+                      return;
+                    }
+                    if (password != confrimPassword) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text("Password does not match !")));
+                      return;
+                    }
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => AddVendorScreen()));
                   },
                   text: "Sign Up",
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("Already have an account"),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => LoginScreen(),
+                            ));
+                      },
+                      child: Text("Login"),
+                    ),
+                  ],
                 ),
               ],
             ),

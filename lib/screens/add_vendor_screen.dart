@@ -147,6 +147,7 @@ class _AddVendorScreenState extends State<AddVendorScreen> {
   }
 
   Uint8List? selectedImage;
+  Uint8List? cameraImage;
 
   uploadFromGallery() async {
     final uploadedImage =
@@ -162,6 +163,12 @@ class _AddVendorScreenState extends State<AddVendorScreen> {
   uploadFromCamera() async {
     var uploadedImage =
         await ImagePicker().pickImage(source: ImageSource.camera);
+    if (uploadedImage != null) {
+      final bytes = await uploadedImage.readAsBytes();
+      setState(() {
+        cameraImage = bytes;
+      });
+    }
   }
 
   @override
@@ -212,7 +219,7 @@ class _AddVendorScreenState extends State<AddVendorScreen> {
                 ),
                 userAvatar(
                   photoUrl: "",
-                  selectedImageBytes: selectedImage,
+                  selectedImageBytes: cameraImage,
                   onPickImage: () {
                     uploadFromCamera();
                   },

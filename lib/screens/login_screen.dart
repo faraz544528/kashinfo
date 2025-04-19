@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:kashinfo/data/controllers.dart';
+import 'package:kashinfo/screens/add_vendor_screen.dart';
 import 'package:kashinfo/widgets/my_buttons.dart';
 import 'package:kashinfo/widgets/my_text_field.dart';
 
@@ -11,16 +12,13 @@ class LoginScreen extends StatefulWidget {
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
+var email;
+var password;
+
 class _LoginScreenState extends State<LoginScreen> {
   loginDetails() {
-    var email = loginEmailController.text.trim();
-    var password = loginPasswordController.text.trim();
-
-    if (email.isEmpty || password.isEmpty) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text("Fill all Fields")));
-      return;
-    }
+    email = loginEmailController.text.trim();
+    password = loginPasswordController.text.trim();
   }
 
   @override
@@ -54,6 +52,15 @@ class _LoginScreenState extends State<LoginScreen> {
               CustomButton(
                 onPressed: () {
                   loginDetails();
+                  if (email.isEmpty || password.isEmpty) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text("Fill all Fields")));
+                    return;
+                  }
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => AddVendorScreen()));
                 },
                 text: "Login",
               ),
