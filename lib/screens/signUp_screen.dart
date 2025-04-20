@@ -4,6 +4,7 @@ import 'package:kashinfo/screens/add_vendor_screen.dart';
 import 'package:kashinfo/screens/login_screen.dart';
 import 'package:kashinfo/widgets/my_buttons.dart';
 import 'package:kashinfo/widgets/my_text_field.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -13,6 +14,32 @@ class SignupScreen extends StatefulWidget {
 }
 
 class _SignupScreenState extends State<SignupScreen> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    whereToGo();
+  }
+
+  var keyName = "SignUp";
+
+  void whereToGo() async {
+    var pref = await SharedPreferences.getInstance();
+    var SignedIn = pref.getBool(keyName);
+    if (SignedIn != null) {
+      if (SignedIn) {
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) => AddVendorScreen()));
+      } else {
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => SignupScreen()));
+      }
+    } else {
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => SignupScreen()));
+    }
+  }
+
   var name;
   var phoneNumber;
   var email;
@@ -98,6 +125,9 @@ class _SignupScreenState extends State<SignupScreen> {
                           SnackBar(content: Text("Password does not match !")));
                       return;
                     }
+                    // var pref = await SharedPreferences.getInstance();
+                    // pref.setBool(keyName, true);
+
                     Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
@@ -111,6 +141,8 @@ class _SignupScreenState extends State<SignupScreen> {
                     Text("Already have an account"),
                     TextButton(
                       onPressed: () {
+                        // var pref = await SharedPreferences.getInstance();
+                        // pref.setBool(keyName, true);
                         Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
