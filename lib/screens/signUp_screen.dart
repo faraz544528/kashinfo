@@ -18,7 +18,7 @@ class _SignupScreenState extends State<SignupScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    whereToGo();
+    WidgetsBinding.instance.addPostFrameCallback((_) => whereToGo());
   }
 
   var keyName = "SignUp";
@@ -30,13 +30,7 @@ class _SignupScreenState extends State<SignupScreen> {
       if (SignedIn) {
         Navigator.pushReplacement(context,
             MaterialPageRoute(builder: (context) => AddVendorScreen()));
-      } else {
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => SignupScreen()));
       }
-    } else {
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => SignupScreen()));
     }
   }
 
@@ -64,16 +58,10 @@ class _SignupScreenState extends State<SignupScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(
-                  height: MediaQuery.sizeOf(context).height - 550,
-                ),
                 CustomTextField(
                   controller: signUpNameController,
                   prefixIcon: Icon(Icons.person_2_outlined),
                   hintText: "Name",
-                ),
-                SizedBox(
-                  height: MediaQuery.sizeOf(context).height - 550,
                 ),
                 CustomTextField(
                   controller: signUpPhoneNoController,
@@ -85,18 +73,12 @@ class _SignupScreenState extends State<SignupScreen> {
                   hintText: "Email",
                   prefixIcon: Icon(Icons.mail_outline_outlined),
                 ),
-                SizedBox(
-                  height: MediaQuery.sizeOf(context).height - 550,
-                ),
                 CustomTextField(
                   controller: signUpPasswordController,
                   obscureText: true,
                   prefixIcon: Icon(Icons.lock_outline),
                   suffixIcon: Icon(Icons.remove_red_eye_outlined),
                   hintText: "Password",
-                ),
-                SizedBox(
-                  height: MediaQuery.sizeOf(context).height - 550,
                 ),
                 CustomTextField(
                   controller: signUpConfirmPasswordController,
@@ -109,7 +91,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   height: MediaQuery.sizeOf(context).height - 550,
                 ),
                 CustomButton(
-                  onPressed: () {
+                  onPressed: () async {
                     signupDetails();
                     if (name.isEmpty ||
                         phoneNumber.isEmpty ||
@@ -125,8 +107,8 @@ class _SignupScreenState extends State<SignupScreen> {
                           SnackBar(content: Text("Password does not match !")));
                       return;
                     }
-                    // var pref = await SharedPreferences.getInstance();
-                    // pref.setBool(keyName, true);
+                    var pref = await SharedPreferences.getInstance();
+                    pref.setBool(keyName, true);
 
                     Navigator.pushReplacement(
                         context,
@@ -140,9 +122,9 @@ class _SignupScreenState extends State<SignupScreen> {
                   children: [
                     Text("Already have an account"),
                     TextButton(
-                      onPressed: () {
-                        // var pref = await SharedPreferences.getInstance();
-                        // pref.setBool(keyName, true);
+                      onPressed: () async {
+                        var pref = await SharedPreferences.getInstance();
+                        pref.setBool(keyName, true);
                         Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
