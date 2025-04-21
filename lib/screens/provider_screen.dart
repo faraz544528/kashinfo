@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:kashinfo/constants/my_colors.dart';
 import 'package:kashinfo/screens/signUp_screen.dart';
@@ -54,30 +55,48 @@ class _ProviderScreenState extends State<ProviderScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(left: 550),
-                      child: IconButton(
-                          onPressed: () {
-                            setState(() {
-                              sendSales = true;
-                            });
-                          },
-                          icon: Icon(Icons.close)),
+                      padding: const EdgeInsets.only(right: 350),
+                      child: Align(
+                        alignment: Alignment.topRight,
+                        child: IconButton(
+                            onPressed: () {
+                              setState(() {
+                                sendSales = true;
+                              });
+                            },
+                            icon: Icon(FontAwesomeIcons.solidCircleXmark)),
+                      ),
                     ),
                     Card(
                       elevation: 4,
-                      child: Container(
-                        height: deviceH * 0.3,
-                        width: deviceW * 0.4,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15),
-                            gradient: LinearGradient(
-                                colors: [AppColors.orange, AppColors.pink],
-                                begin: Alignment.topLeft,
-                                end: Alignment.topRight)),
-                        child: userAvatar(
-                            photoUrl: null,
-                            selectedImageBytes: selectedProviderImage,
-                            onPickImage: uploadImage),
+                      child: InkWell(
+                        onTap: uploadImage,
+                        child: Container(
+                          height: deviceH * 0.3,
+                          width: deviceW * 0.4,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15),
+                              gradient: LinearGradient(
+                                  colors: [AppColors.orange, AppColors.pink],
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.topRight)),
+                          child: selectedProviderImage != null
+                              ? Center(
+                                  child: Image.memory(
+                                    selectedProviderImage!,
+                                    width: 160,
+                                    height: 160,
+                                    fit: BoxFit.contain,
+                                  ),
+                                )
+                              : Center(
+                                  child: Icon(
+                                    FontAwesomeIcons.fileImage,
+                                    color: Colors.white,
+                                    size: 90,
+                                  ),
+                                ),
+                        ),
                       ),
                     ),
                     SizedBox(
