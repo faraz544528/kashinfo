@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:kashinfo/constants/my_colors.dart';
 import 'package:kashinfo/screens/signUp_screen.dart';
+import 'package:kashinfo/widgets/appBar.dart';
 import 'package:kashinfo/widgets/my_buttons.dart';
 import 'package:kashinfo/widgets/user_avatar.dart';
 
@@ -36,28 +37,7 @@ class _ProviderScreenState extends State<ProviderScreen> {
     double deviceW = MediaQuery.sizeOf(context).width;
 
     return Scaffold(
-        appBar: AppBar(
-          flexibleSpace: Container(
-            width: double.infinity,
-            height: deviceH * 0.1,
-            decoration: BoxDecoration(
-                gradient: LinearGradient(
-                    colors: [AppColors.orange, AppColors.pink],
-                    begin: Alignment.topLeft,
-                    end: Alignment.topRight)),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Center(
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 5),
-                  child: Image(
-                      image: AssetImage(
-                          "assets/KashInfo.Logo-removebg-preview.png")),
-                ),
-              ),
-            ),
-          ),
-        ),
+        appBar: CustomAppBar(),
         body: sendSales
             ? Center(
                 child: CustomButton(
