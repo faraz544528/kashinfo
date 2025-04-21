@@ -185,7 +185,7 @@ class _AddVendorScreenState extends State<AddVendorScreen> {
               gradient: LinearGradient(
                   colors: [AppColors.orange, AppColors.pink],
                   begin: Alignment.topLeft,
-                  end: Alignment.topRight)),
+                  end: Alignment.bottomRight)),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Row(
@@ -218,7 +218,7 @@ class _AddVendorScreenState extends State<AddVendorScreen> {
                   },
                 ),
                 userAvatar(
-                  photoUrl: "",
+                  photoUrl: null,
                   selectedImageBytes: cameraImage,
                   onPickImage: () {
                     uploadFromCamera();

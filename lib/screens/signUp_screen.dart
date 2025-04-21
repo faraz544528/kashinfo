@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:kashinfo/data/controllers.dart';
 import 'package:kashinfo/screens/add_vendor_screen.dart';
 import 'package:kashinfo/screens/login_screen.dart';
@@ -18,14 +19,12 @@ class _SignupScreenState extends State<SignupScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) => whereToGo());
+    // WidgetsBinding.instance.addPostFrameCallback((_) => whereToGo());
   }
-
-  var keyName = "SignUp";
 
   void whereToGo() async {
     var pref = await SharedPreferences.getInstance();
-    var SignedIn = pref.getBool(keyName);
+    var SignedIn = pref.getBool("SignUp");
     if (SignedIn != null) {
       if (SignedIn) {
         Navigator.pushReplacement(context,
@@ -40,12 +39,36 @@ class _SignupScreenState extends State<SignupScreen> {
   var password;
   var confrimPassword;
 
-  signupDetails() {
+  signupDetails() async {
     name = signUpNameController.text.trim();
     phoneNumber = signUpPhoneNoController.text.trim();
     email = signUpEmailController.text.trim();
     password = signUpPasswordController.text.trim();
     confrimPassword = signUpConfirmPasswordController.text.trim();
+    if (name.isEmpty ||
+        phoneNumber.isEmpty ||
+        email.isEmpty ||
+        password.isEmpty ||
+        confrimPassword.isEmpty) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text("Fill All Fields")));
+      return;
+    }
+    if (password != confrimPassword) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text("Password does not match !")));
+      return;
+    }
+    if (password.length != 8) {
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Requires minimum 8 Characters")));
+      return;
+    }
+    var pref = await SharedPreferences.getInstance();
+    pref.setBool("SignUp", true);
+
+    Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (context) => AddVendorScreen()));
   }
 
   @override
@@ -93,27 +116,6 @@ class _SignupScreenState extends State<SignupScreen> {
                 CustomButton(
                   onPressed: () async {
                     signupDetails();
-                    if (name.isEmpty ||
-                        phoneNumber.isEmpty ||
-                        email.isEmpty ||
-                        password.isEmpty ||
-                        confrimPassword.isEmpty) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text("Fill All Fields")));
-                      return;
-                    }
-                    if (password != confrimPassword) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text("Password does not match !")));
-                      return;
-                    }
-                    var pref = await SharedPreferences.getInstance();
-                    pref.setBool(keyName, true);
-
-                    Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => AddVendorScreen()));
                   },
                   text: "Sign Up",
                 ),
@@ -122,9 +124,9 @@ class _SignupScreenState extends State<SignupScreen> {
                   children: [
                     Text("Already have an account"),
                     TextButton(
-                      onPressed: () async {
-                        var pref = await SharedPreferences.getInstance();
-                        pref.setBool(keyName, true);
+                      onPressed: () {
+                        // var pref = await SharedPreferences.getInstance();
+                        // pref.setBool("SignUp", true);
                         Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(

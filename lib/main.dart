@@ -4,7 +4,9 @@ import 'package:kashinfo/firebase_options.dart';
 import 'package:kashinfo/screens/add_vendor_screen.dart';
 import 'package:kashinfo/screens/homescreen.dart';
 import 'package:kashinfo/screens/login_screen.dart';
+import 'package:kashinfo/screens/provider_screen.dart';
 import 'package:kashinfo/screens/signUp_screen.dart';
+import 'package:kashinfo/screens/splash_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,7 +25,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(),
-      home: SignupScreen(),
+      home: ProviderScreen(),
     );
   }
 }

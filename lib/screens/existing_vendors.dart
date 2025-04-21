@@ -5,8 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:kashinfo/constants/my_colors.dart';
 
 class ExistingVendors extends StatefulWidget {
-  final List<Map<String, String>> vendors;
-  ExistingVendors({super.key, required this.vendors});
+  ExistingVendors({super.key});
 
   @override
   State<ExistingVendors> createState() => _ExistingVendorsState();
