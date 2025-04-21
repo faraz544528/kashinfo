@@ -27,3 +27,16 @@ samples, guidance on mobile development, and a full API reference.
 # 4. add image picker
 
 #.....
+
+
+
+
+
+
+
+
+
+
+# MON 21 April
+
+# Make a beautiful refactored AppBar that works on params ----> Use its instances accross project
