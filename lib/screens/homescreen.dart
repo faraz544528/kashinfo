@@ -3,6 +3,7 @@ import 'package:kashinfo/constants/my_colors.dart';
 import 'package:kashinfo/screens/add_vendor_screen.dart';
 import 'package:kashinfo/screens/existing_vendors.dart';
 import 'package:kashinfo/screens/provider_screen.dart';
+import 'package:kashinfo/widgets/appBar.dart';
 import 'package:kashinfo/widgets/my_buttons.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -24,32 +25,21 @@ class _HomeScreenState extends State<HomeScreen> {
     double deviceW = MediaQuery.sizeOf(context).width;
 
     return Scaffold(
-      appBar: AppBar(
-        flexibleSpace: Container(
-          width: double.infinity,
-          height: deviceH * 0.12,
-          decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  colors: [AppColors.orange, AppColors.pink],
-                  begin: Alignment.topLeft,
-                  end: Alignment.topRight)),
+      appBar: CustomAppBar(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Row(
-              children: [
-                CircleAvatar(
-                  radius: 25,
-                  child: Icon(Icons.person_add),
-                ),
-                SizedBox(width: deviceW * 0.37),
-                Text("KashInfo - Admin Panel",
-                    style:
-                        TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-              ],
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: Row(
+          children: [
+            CircleAvatar(
+              radius: 25,
+              child: Icon(Icons.person_add),
             ),
-          ),
+            SizedBox(width: deviceW * 0.37),
+            Text("KashInfo - Admin Panel",
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+          ],
         ),
-      ),
+      )),
       body: Center(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,

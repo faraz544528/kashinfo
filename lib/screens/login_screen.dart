@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:kashinfo/data/controllers.dart';
 import 'package:kashinfo/screens/add_vendor_screen.dart';
+import 'package:kashinfo/widgets/appBar.dart';
 import 'package:kashinfo/widgets/my_buttons.dart';
 import 'package:kashinfo/widgets/my_text_field.dart';
 
@@ -29,6 +30,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: CustomAppBar(),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 40),
         child: Center(

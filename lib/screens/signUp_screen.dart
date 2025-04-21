@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:kashinfo/data/controllers.dart';
 import 'package:kashinfo/screens/add_vendor_screen.dart';
 import 'package:kashinfo/screens/login_screen.dart';
+import 'package:kashinfo/widgets/appBar.dart';
 import 'package:kashinfo/widgets/my_buttons.dart';
 import 'package:kashinfo/widgets/my_text_field.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -74,6 +75,7 @@ class _SignupScreenState extends State<SignupScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: CustomAppBar(),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 40),
         child: Center(
